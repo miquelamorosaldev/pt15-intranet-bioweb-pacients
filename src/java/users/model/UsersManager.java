@@ -30,9 +30,13 @@ public class UsersManager {
     public boolean isValidUser(String username, String password) {
         // Existe nombre de usuario ?
         boolean exists = users.containsKey(username);
+        User dbUser;
+        String pwForm = "";
         // Contraseña correcta ? 
-        User dbUser = users.get(username);
-        String pwForm = dbUser.getPassword();
+        if(exists) {
+            dbUser = users.get(username);
+            pwForm = dbUser.getPassword();
+        }
         return exists && password.equals(pwForm);
     }
     

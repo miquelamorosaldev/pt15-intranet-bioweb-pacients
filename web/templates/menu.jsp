@@ -1,7 +1,7 @@
 <nav class="navbar sticky-top navbar-dark bg-danger">
     <!-- Header amb el banner de la web -->
     <a class="navbar-brand" href="index.jsp">
-        <img id="banner-img" src="img/bioinfo-banner.jpg" 
+        <img id="banner-img" src="../img/bioinfo-banner.jpg" 
              class="d-inline-block align-middle" alt="Banner Bioinformatica">
     </a>
     <!-- Menú navegació visitants (que no estan registrats) -->

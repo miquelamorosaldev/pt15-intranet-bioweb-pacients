@@ -21,7 +21,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author alumne
  */
-@WebServlet(name = "UserController", urlPatterns = {"/user"})
+@WebServlet(name = "UserController", urlPatterns = {"/UsersServlet"})
 public class UserController extends HttpServlet {
 
    
@@ -100,7 +100,7 @@ public class UserController extends HttpServlet {
             response.addCookie(userName);
             // Indiquem a la vista si l'usuari es admin o user.
             session.setAttribute("role", usersManager.getRole(username));
-            response.sendRedirect("welcome.jsp");
+            response.sendRedirect("./intranet/adn.jsp");
         } else {
             response.sendRedirect("login.jsp?error=1");
         }
