@@ -1,6 +1,18 @@
 # pt15-intranet-bioweb-pacients
 
-Plantilla PT15.
+## ESTAT VERSIÓ: 
+Plantilla PT15, el login està fet. 
+
+## REQUERIMENTS
+* Desenvolupament multiplataforma, prioritzant l'ús de Linux Ubuntu 20.04
+* IDE amb suport per Java → Apache Netbeans 12, mínim versió 12.0
+* JDK → Open JDK 11 actualitzada. També pot ser necessari la JDK 8 actualitzada.
+* Servidor web configurat amb Java → Apache Tomcat 9.0.20 o Glassfish 5.0.11
+* Llibreria JavaEE Web 7 (Apache Netbeans la inclou)
+* Llibreries JUnit 4 si volem fer testing avançat (Apache Netbeans la inclou)
+* Llibraria generació fitxers JSON (SimpleJSON o GSON) per tractar estructures i facilitar creació Web Services.
+
+## DESCRIPCIÓ DEL PROJECTE:
 
 L’ICS ens ha demanat la segona fase d’una aplicació web per a gestionar dades bàsiques de pacients de la secció d’oncologia. 
 Volen un portal web amb una intranet on només es podran connectar els usuaris autoritzats. 
@@ -14,7 +26,12 @@ Una pàgina que, donada un tros de cadena d’ADN de com a molt 1000 caràcters,
 Cal informar a l’usuari si no ha inserit una cadena ADN correcta.
 
 ### Llistat de pacients.
-Una pàgina que mostrarà el tot llistat de pacients en una taula. Cal tenir-ne 4 de inserits inicialment. Ara per ara no posaran filtres a la llista, es mostraran tots.
+Una pàgina que mostrarà el tot llistat de pacients en una taula. Cal tenir-ne 4 de inserits inicialment. 
+- OPCIONAL: Mostrar aquesta llista amb un estil RWD, que es vegi bé en totes les pantalles. 
+
+### Filtre de pacients per un o 2 criteris.
+Una pàgina que mostrarà llistat de pacients en una taula, i permetrà filtrar-lo per algún camp rellevant: RH, Gènere.
+Amb 1 o 2 criteris és suficient
 - OPCIONAL: Mostrar aquesta llista amb un estil RWD, que es vegi bé en totes les pantalles. 
 
 ### Afegir pacient (només usuaris admin)
@@ -22,6 +39,8 @@ Una pàgina amb un formulari on l’usuari podrà omplir les dades d’un pacien
 Cal informar a l’usuari si ha pogut registrar el pacient o bé no ha omplert tots els camps correctament. 
 
 ### Llistat d'usuaris (només usuaris admin)
+Una pàgina on es mostri el llistat d'usuaris. 
+
 
 ## Observacions importants.
 
@@ -39,7 +58,4 @@ Les dades en aquesta fase no seran persistents.
 Per ara, es guardaran en memòria mitjançant un ArrayList però es preveu que en un futur (el 2022) es gestionin en una base de dades SQL; així que es valorarà positivament usar el patró DAO per a poder fer el canvi d’escenari fàcilment.
 
 ## Algunes de les tasques que es preveu implementar en un futur.
-    • Login d’usuaris.
-    • Que els administradors puguin veure un llistat d’usuaris 
-    • Filtrar la llista de clients per alguns criteris: RH, Grup Sanguini...
     • Mostrar la informació dels pacients en un web service.
