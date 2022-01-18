@@ -5,13 +5,18 @@
  */
 package users;
 
+import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import patients.Patient;
+import patients.PatientsMemoryDAO;
 
 /**
  *
@@ -20,60 +25,38 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "PatientWS", urlPatterns = {"/PatientWS"})
 public class PatientWS extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet PatientWS</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet PatientWS at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
+    private PatientsMemoryDAO patientDAO;
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
+        Gson gson = new Gson();
+        // calcula la ruta absoluta para llegar a WEB-INF, si tenemos un fichero.
+        // Cuando hacemos Clean & Build, se genera otra estructura de directorios: LoginApplication/build/web/WEB-INF/
+        // path = getServletContext().getRealPath("/WEB-INF");
+        patientDAO = new PatientsMemoryDAO();
+        List<Patient> patients = new ArrayList<>();
+        String action=request.getParameter("action");
+        switch(action){
+            case "ListAll":
+                // Llegim els pacients de la base de dades
+                patients = patientDAO.listAllPatients();
+                break;
+            case "ListWomen": 
+                // Llegim els pacients de la base de dades
+                patients = patientDAO.listWomanPatients();
+                break; 
+        }  
+        // Posem la llista de pacients en un fitxer JSON.
+        String patientsJsonString = gson.toJson(patients);
+        // Responem incloent la llista de pacients en format JSON
+        PrintWriter out = response.getWriter();
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        out.print(patientsJsonString);
+        out.flush();
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
 
     /**
      * Returns a short description of the servlet.
