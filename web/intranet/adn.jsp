@@ -1,9 +1,3 @@
-<%-- 
-    Document   : landing
-    Created on : Jan 30, 2019, 3:40:48 PM
-    Author     : aasensio
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="adnutils.*" %>
 <!DOCTYPE html>
@@ -19,6 +13,7 @@
         <header>
             <!-- Ull amb les rutes. En aquest cas és .. (carpeta anterior) /templates -->
             <%@include file="../templates/menu.jsp" %>
+            <%@include file="./userValidation.jsp" %>
             <% 
                 // Obtenció ADN del form.
                 String ADN_field = request.getParameter("ADN_field");

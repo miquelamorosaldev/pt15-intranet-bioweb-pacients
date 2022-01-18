@@ -15,34 +15,35 @@
         <header>
             <!-- Ull amb les rutes. En aquest cas és .. (carpeta anterior) /templates -->
             <%@include file="../templates/menu.jsp" %>
+            <%@include file="./userValidation.jsp" %>
         </header>
         <main>
-            <div class="container mw-100"> <!-- comment -->
-                <h3>List Patients</h3>
-                <ul>
-                <% 
-                    PatientsMemoryDAO daoPatients = new PatientsMemoryDAO();
-                    List<Patient> resultList = daoPatients.listAllPatients();
-                    for(Patient pa: resultList) {
-                %>
-                <li><%=pa.toString()%></li>
-                <% 
-                    }
-                %>
-                </ul>
-                <p><%=resultList.size()%> pacientes encontrados.</p>
-                <h4>List Woman Patients</h4>
-                <ol style="list-style-type:lower-alpha">
-                <% 
-                    List<Patient> resultListWoman = daoPatients.listWomanPatients();
-                    for(Patient paW: resultListWoman) {
-                %>
-                <li><%=paW.toString()%></li>
-                <% 
-                    }
-                %>
-                </ol>
-                <p><%=resultListWoman.size()%> pacientes encontradas.</p>
+            <div class="container mw-100"> 
+                    <h3>List Patients</h3>
+                    <ul>
+                    <% 
+                        PatientsMemoryDAO daoPatients = new PatientsMemoryDAO();
+                        List<Patient> resultList = daoPatients.listAllPatients();
+                        for(Patient pa: resultList) {
+                    %>
+                    <li><%=pa.toString()%></li>
+                    <% 
+                        }
+                    %>
+                    </ul>
+                    <p><%=resultList.size()%> pacientes encontrados.</p>
+                    <h4>List Woman Patients</h4>
+                    <ol style="list-style-type:lower-alpha">
+                    <% 
+                        List<Patient> resultListWoman = daoPatients.listWomanPatients();
+                        for(Patient paW: resultListWoman) {
+                    %>
+                    <li><%=paW.toString()%></li>
+                    <% 
+                        }
+                    %>
+                    </ol>
+                    <p><%=resultListWoman.size()%> pacientes encontradas.</p>
             </div>
         </main>
         <footer>

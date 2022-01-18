@@ -54,6 +54,9 @@ public class UserController extends HttpServlet {
                 case "Validate":
                     login(request,response);
                 break;
+                case "ValidateCookie":
+                    ValidateCookie(request,response);
+                break;
                 case "AdminPage":
                     admin(request,response);
                 break;
@@ -94,18 +97,21 @@ public class UserController extends HttpServlet {
             session.setAttribute("user", username);
             // Lo de la cookie
             //setting session to expiry in 30 mins
-            /*
             session.setMaxInactiveInterval(30*60);
             Cookie userName = new Cookie("user", username);
             userName.setMaxAge(30*60);
             response.addCookie(userName);
-            */
             // Indiquem a la vista si l'usuari es admin o user.
             session.setAttribute("role", usersManager.getRole(username));
             response.sendRedirect("./intranet/adn.jsp");
         } else {
             response.sendRedirect("login.jsp?error=1");
         }
+    }
+    
+    private void ValidateCookie(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        Cookie[] cookies = request.getCookies();
+        
     }
     
     private void logout(HttpServletRequest request, HttpServletResponse response) throws IOException {
