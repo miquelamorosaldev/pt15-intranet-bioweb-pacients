@@ -92,12 +92,14 @@ public class UserController extends HttpServlet {
             //crear una variable de sesion
             HttpSession session=request.getSession();
             session.setAttribute("user", username);
-            // I una cookie
+            // Lo de la cookie
             //setting session to expiry in 30 mins
+            /*
             session.setMaxInactiveInterval(30*60);
             Cookie userName = new Cookie("user", username);
             userName.setMaxAge(30*60);
             response.addCookie(userName);
+            */
             // Indiquem a la vista si l'usuari es admin o user.
             session.setAttribute("role", usersManager.getRole(username));
             response.sendRedirect("./intranet/adn.jsp");
