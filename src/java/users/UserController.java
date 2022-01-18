@@ -21,7 +21,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author alumne
  */
-@WebServlet(name = "UserController", urlPatterns = {"/UsersServlet"})
+@WebServlet(name = "UserController", urlPatterns = {"/user"})
 public class UserController extends HttpServlet {
 
    
@@ -116,23 +116,28 @@ public class UserController extends HttpServlet {
     
     private void logout(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/html");
-    	Cookie[] cookies = request.getCookies();
-    	if(cookies != null){
-    	for(Cookie cookie : cookies){
-    		if(cookie.getName().equals("JSESSIONID")){
-    			System.out.println("JSESSIONID="+cookie.getValue());
-    			break;
-    		}
-    	}
-    	}
+        // https://kodejava.org/how-do-i-delete-a-cookie-in-servlet/
+        // To delete a cookie, we need to create a cookie that have the same
+        // name with the cookie that we want to delete. We also need to set
+        // the max age of the cookie to 0 and then add it to the Servlet's
+        // response method.
+        //
+        Cookie cookieUser = new Cookie("user", "");
+        cookieUser.setMaxAge(0);
+        response.addCookie(cookieUser);
+        Cookie cookieJSESSIONID = new Cookie("JSESSIONID","");
+        cookieJSESSIONID.setMaxAge(0);
+        response.addCookie(cookieJSESSIONID);
     	//invalidate the session if exists
     	HttpSession session = request.getSession(false);
     	System.out.println("User="+session.getAttribute("user"));
-    	if(session != null){
+    	/*
+        if(session != null){
             session.removeAttribute("user");
             session.removeAttribute("role");
             session.invalidate();
     	}
+        */
         response.sendRedirect("login.jsp");
     }
              

@@ -20,7 +20,7 @@
                 -->
                 <!-- RWD Form -->
                 <div class="form-row">
-                    <form method="post" action="UsersServlet">
+                    <form method="post" action="user">
                         <div class="col-md-4 col-sm-6 col-xs-12">
                             <label>Username:</label> 
                             <input type="text" name="username"/>

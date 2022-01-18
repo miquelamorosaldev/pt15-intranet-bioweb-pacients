@@ -30,7 +30,7 @@
            href='../intranet/adn-gen.jsp'>ADN Gen (Pt14Opt)</a>
         -->
         <a class='flex-sm-fill text-sm-center nav-link active opt-menu' 
-           href='UsersServlet?action=Invalidate'>Logout</a>
+           href='../user?action=Invalidate'>Logout</a>
         <% if(session.getAttribute("admin")!=null) { %>
         <!-- Menú navegació usuaris registrats Intranet com a admin. -->
             <a class='flex-sm-fill text-sm-center nav-link opt-menu' 
