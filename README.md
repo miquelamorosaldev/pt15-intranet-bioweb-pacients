@@ -27,12 +27,15 @@ Cal informar a l’usuari si no ha inserit una cadena ADN correcta.
 
 ### Llistat de pacients.
 Una pàgina que mostrarà el tot llistat de pacients en una taula. Cal tenir-ne 4 de inserits inicialment. 
-- OPCIONAL: Mostrar aquesta llista amb un estil RWD, que es vegi bé en totes les pantalles. 
 
 ### Filtre de pacients per un o 2 criteris.
 Una pàgina que mostrarà llistat de pacients en una taula, i permetrà filtrar-lo per algún camp rellevant: RH, Gènere.
-Amb 1 o 2 criteris és suficient
-- OPCIONAL: Mostrar aquesta llista amb un estil RWD, que es vegi bé en totes les pantalles. 
+Amb 1 o 2 criteris és suficient.
+Hi ha 2 formes per a pintar els resultats:
+* Des d'un ArrayList<Patient> extret d'una JSP.
+* Des d'un JSON, així no cal usar una JSP per a pintar els resultats.
+    
+### OPCIONAL. Filtre de pacients per cognom i/o nom, amb un camp autoemplenable.
 
 ### Afegir pacient (només usuaris admin)
 Una pàgina amb un formulari on l’usuari podrà omplir les dades d’un pacient i guardar-lo al sistema. 
@@ -58,4 +61,5 @@ Les dades en aquesta fase no seran persistents.
 Per ara, es guardaran en memòria mitjançant un ArrayList però es preveu que en un futur (el 2022) es gestionin en una base de dades SQL; així que es valorarà positivament usar el patró DAO per a poder fer el canvi d’escenari fàcilment.
 
 ## Algunes de les tasques que es preveu implementar en un futur.
-    • Mostrar la informació dels pacients en un web service.
+    * Mostrar la informació dels pacients en un web service.
+    * Mostrar aquesta llista amb un estil RWD, que es vegi bé en totes les pantalles. 
