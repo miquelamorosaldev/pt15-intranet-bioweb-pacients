@@ -25,6 +25,8 @@
            href='../intranet/adn.jsp'>ADNValidator</a>
         <a class='flex-sm-fill text-sm-center nav-link opt-menu' 
            href='../intranet/listAllPatients.jsp'>List Patients</a>
+        <a class='flex-sm-fill text-sm-center nav-link opt-menu' 
+           href='../patient?action=ListAll'>Filter Patients</a>
         <!--
         <a class='flex-sm-fill text-sm-center nav-link opt-menu' 
            href='../intranet/adn-gen.jsp'>ADN Gen (Pt14Opt)</a>
