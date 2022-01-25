@@ -107,7 +107,10 @@ public class PatientsController extends HttpServlet {
             // 4. Enviem la llista resultant a la JSP 
             request.setAttribute("patientsList", resultList);
             // ./intranet/filterPatients.jsp
-            RequestDispatcher rd = request.getRequestDispatcher("./intranet/filterPatients.jsp");
+            // response.sendRedirect("../intranet/filterPatients.jsp");
+            // https://stackoverflow.com/questions/24905788/dispatch-request-to-jsp-page-in-specific-folder
+            RequestDispatcher rd = 
+                getServletConfig().getServletContext().getRequestDispatcher("../intranet/filterPatients.jsp");
             rd.forward(request, response);
         }
     }
