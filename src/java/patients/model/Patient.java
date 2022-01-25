@@ -1,4 +1,4 @@
-package patients;
+package patients.model;
 
 /**
  * Class that contains all the patients info: blood type, rh, height, weight, name... 

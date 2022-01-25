@@ -8,12 +8,17 @@ package patients;
 
 import java.io.IOException;
 import java.util.List;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import patients.model.IPatientsDAO;
+import patients.model.Patient;
+import patients.model.PatientsMemoryDAO;
 
 /**
  *
@@ -60,30 +65,51 @@ public class PatientsController extends HttpServlet {
         }
     }
     
-    private void listAll(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    private void listAll(HttpServletRequest request, HttpServletResponse response) 
+            throws ServletException, IOException {
         // Agafem les dades del formulari de filtre.
 //        String username=request.getParameter("username");
 //        String password=request.getParameter("password"); 
 
         // 1. Verifiquem la sessió.
-        
-        // 2. Obtenim la llista de pacients.
-        PatientsMemoryDAO daoPatients = new PatientsMemoryDAO();
-        List<Patient> resultList = daoPatients.listAllPatients();
-        
-        // 3. Enviem la llista resultant a la JSP 
-        request.setAttribute("listPatients", resultList);
-        response.sendRedirect("./intranet/filterPatients.jsp");
+        // Agafem les dades de la sessió.
+        HttpSession session=request.getSession();
+        if(session.getAttribute("user")==null){
+            response.sendRedirect("login.jsp");
+        } else {
+            // 2. Obtenim la llista de pacients.
+            PatientsMemoryDAO daoPatients = new PatientsMemoryDAO();
+            List<Patient> resultList = daoPatients.listAllPatients();
+
+            // 3. Enviem la llista resultant a la JSP 
+            request.setAttribute("patientsList", resultList);
+            RequestDispatcher rd = request.getRequestDispatcher("listAllPatients.jsp");
+            rd.forward(request, response);
+        }
     }
 
-    private void filter(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        // Agafem les dades del formulari de filtre.
-//        String username=request.getParameter("username");
-//        String password=request.getParameter("password"); 
-        
-        // Si l'usuari amb contrassenya existeix a la nostra base de dades.
-        
-        response.sendRedirect("./intranet/filterPatients.jsp");
+    private void filter(HttpServletRequest request, HttpServletResponse response) 
+             throws ServletException, IOException {
+        // 1. Verifiquem la sessió.
+        // Agafem les dades de la sessió.
+        HttpSession session=request.getSession();
+        if(session.getAttribute("user")==null){
+            response.sendRedirect("login.jsp");
+        } else {
+            // 2. Agafem les dades del filtre de pacients.
+            String rh_form = request.getParameter("rh_form");
+            
+            // 3. Cridem PatientsDAO per a què ens retorni la llista de pacients 
+            // filtrada.
+            PatientsMemoryDAO daoPatients = new PatientsMemoryDAO();
+            List<Patient> resultList = daoPatients.listPatientsByRH(rh_form);
+
+            // 4. Enviem la llista resultant a la JSP 
+            request.setAttribute("patientsList", resultList);
+            // ./intranet/filterPatients.jsp
+            RequestDispatcher rd = request.getRequestDispatcher("./intranet/filterPatients.jsp");
+            rd.forward(request, response);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

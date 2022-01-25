@@ -11,13 +11,14 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import patients.IPatientsDAO;
-import patients.Patient;
-import patients.PatientsMemoryDAO;
+import patients.model.IPatientsDAO;
+import patients.model.Patient;
+import patients.model.PatientsMemoryDAO;
 
 /**
- *
- * @author alumne
+ * Nota: Estos tests estan contextualizados, en un contenido concreto de la 
+ * base de datos. Mirad el constructor.
+ * @author amoros
  */
 public class PatientsJUnit {
     
@@ -25,6 +26,20 @@ public class PatientsJUnit {
     
     public PatientsJUnit() {
         daoPatients = new PatientsMemoryDAO();
+        /* 
+        patients.add(
+                new Patient("Flavio","Larrea Ayala","gen-man","A",'+',165,80));
+            patients.add(
+                new Patient("Débora","Aramburu Galvez","gen-wom","O",'+',170,70));
+            patients.add(
+                new Patient("Albano","Danilo Pla Gallo","gen-oth","AB",'-',180,71));
+            patients.add(
+                new Patient("Dorothy","Vaughan","gen-wom","B",'+',172,75));
+            patients.add(
+                new Patient("Mary","Jackson","gen-wom","A",'+',164,60));
+            patients.add(
+                new Patient("George","Mendel","gen-man","AB",'+',160,60));
+        */
     }
     
     @BeforeClass
@@ -54,4 +69,14 @@ public class PatientsJUnit {
         assertEquals(expectedNumPatients, resultList.size());
         assertEquals(expectedNameFirstPatient, resultList.get(0).getName());
     }
+    
+    /*
+    @Test
+    public void testListRhNegPatients() {
+        int expectedNumPatients = 1;
+        String rhNeg = "-";
+        List<Patient> resultList = daoPatients.listPatientsByRH(rhNeg);
+        assertEquals(expectedNumPatients, resultList.size());
+    }
+*/
 }

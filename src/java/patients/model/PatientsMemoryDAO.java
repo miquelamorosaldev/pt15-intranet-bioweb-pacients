@@ -5,7 +5,7 @@
  * Singleton 
  * https://www.journaldev.com/1377/java-singleton-design-pattern-best-practices-examples#lazy-initialization
  */
-package patients;
+package patients.model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,6 +58,18 @@ public class PatientsMemoryDAO implements IPatientsDAO{
             }
         }
         return womanPatients;
+    }
+    
+    public List<Patient> listPatientsByRH(String rh) {
+        List<Patient> filteredPatients = new ArrayList<>();
+        char rhForm = rh.charAt(0);
+        // gen-wom, gen-man, or gen-oth.
+        for (Patient patient : patients) {
+            if (patient.getRH() == rhForm) {
+                filteredPatients.add(patient);
+            }
+        }
+        return filteredPatients;
     }
     
 }

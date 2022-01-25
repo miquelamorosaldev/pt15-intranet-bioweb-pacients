@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package patients;
+package patients.model;
 
 import java.util.List;
 
@@ -15,5 +15,6 @@ public interface IPatientsDAO {
     
     List<Patient> listAllPatients();
     boolean addPatient(Patient patient);
-
+    List<Patient> listWomanPatients();
+    List<Patient> listPatientsByRH(String rh);
 }

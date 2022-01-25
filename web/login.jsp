@@ -31,7 +31,7 @@
                         </div>    
                         <div class="col-md-6 col-sm-12">
                             <button class="login-submit" 
-                                 accesskey=""type="submit" name="action" value="Validate">Log In</button>     
+                                 accesskey="" type="submit" name="action" value="Validate">Log In</button>     
                         </div>
                     </form>
                 </div>
