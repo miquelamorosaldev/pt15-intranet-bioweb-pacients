@@ -11,6 +11,7 @@
     <body>
         <header>
             <%@include file="templates/menu.jsp" %>
+            <%@include file="userValidation.jsp" %>
         </header>
         <main class="container mw-100">
                 <h3>My Little Login</h3>

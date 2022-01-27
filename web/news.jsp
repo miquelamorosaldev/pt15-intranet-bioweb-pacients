@@ -17,6 +17,7 @@
     <body>
         <header>
             <%@include file="templates/menu.jsp" %>
+            <%@include file="userValidation.jsp" %>
         </header>
         <main>
             <!-- Main Content -->
