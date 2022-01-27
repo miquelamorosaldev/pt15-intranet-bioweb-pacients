@@ -28,9 +28,9 @@
            href='../intranet/listAllPatients.jsp'>List Patients</a> 
         -->
         <a class='flex-sm-fill text-sm-center nav-link opt-menu' 
-           href='../intranet/listAllPatients.jsp'>List Patients</a> 
+           href='<%= request.getContextPath() %>/intranet/listAllPatients.jsp'>List Patients</a> 
         <a class='flex-sm-fill text-sm-center nav-link opt-menu' 
-           href='../intranet/filterPatients.jsp'>Filter Patients</a>
+           href='<%= request.getContextPath() %>/intranet/filterPatients.jsp'>Filter Patients</a>
         <!--
         <a class='flex-sm-fill text-sm-center nav-link opt-menu' 
            href='../intranet/adn-gen.jsp'>ADN Gen (Pt14Opt)</a>

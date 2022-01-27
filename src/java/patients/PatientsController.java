@@ -109,8 +109,10 @@ public class PatientsController extends HttpServlet {
             // ./intranet/filterPatients.jsp
             // response.sendRedirect("../intranet/filterPatients.jsp");
             // https://stackoverflow.com/questions/24905788/dispatch-request-to-jsp-page-in-specific-folder
-            RequestDispatcher rd = 
-                getServletConfig().getServletContext().getRequestDispatcher("../intranet/filterPatients.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("./intranet/filterPatients.jsp");
+            // no error rutas pero no envia nada.
+            // response.sendRedirect("./intranet/filterPatients.jsp");
+            // error rutas.
             rd.forward(request, response);
         }
     }
