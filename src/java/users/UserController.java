@@ -18,17 +18,21 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- *
- * @author alumne
+ * @author Institut Provençana, 2022.
  */
 @WebServlet(name = "UserController", urlPatterns = {"/user"})
 public class UserController extends HttpServlet {
 
    
     /**
-     * Llama a la clase Manager de los usuarios de la app.
+     * Classe Manager dels usuaris de la app.
      */
-    UsersManager usersManager;
+    private UsersManager usersManager;
+    /**
+     * Número d'intents de login.
+     */
+    private int intentsLogin;
+    private int MAXIM_INTENTS_LOGIN = 10;
     
     @Override
     public void init(ServletConfig config) throws ServletException{
@@ -75,7 +79,7 @@ public class UserController extends HttpServlet {
         // Agafem les dades de la sessió.
         HttpSession session=request.getSession();
         if(session.getAttribute("user")==null){
-                response.sendRedirect("login.jsp");
+             response.sendRedirect("login.jsp");
          } else {
              if(!session.getAttribute("role").equals("ADMIN")){
                   response.sendRedirect("login.jsp");
@@ -86,57 +90,66 @@ public class UserController extends HttpServlet {
     }
         
     private void login(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        // Agafem les dades del formulari.
-        String username=request.getParameter("username");
-        String password=request.getParameter("password"); 
         
-        // Si l'usuari amb contrassenya existeix a la nostra base de dades.
-        if(usersManager.isValidUser(username,password)){
-            //crear una variable de sesion
-            HttpSession session=request.getSession();
-            session.setAttribute("user", username);
-            // Lo de la cookie
-            //setting session to expiry in 30 mins
-            session.setMaxInactiveInterval(30*60);
-            Cookie userName = new Cookie("user", username);
-            userName.setMaxAge(30*60);
-            response.addCookie(userName);
-            // Indiquem a la vista si l'usuari es admin o user.
-            session.setAttribute("role", usersManager.getRole(username));
-            response.sendRedirect("./intranet/adn.jsp");
+        // Si l'usuari no ha excedit el límit d'intents de login.
+		  if(loginAttempts > MAXIM_INTENTS_LOGIN){
+			   String errorMessage = "Error: Number of Login Attempts Exceeded";
+			   request.setAttribute("errorMessage", errorMessage);
+            response.sendRedirect("login.jsp?error=1");
         } else {
+           // Agafem les dades del formulari.
+           String username=request.getParameter("username");
+           String password=request.getParameter("password");    
+           // Si l'usuari amb contrassenya existeix a la nostra base de dades.
+           if(usersManager.isValidUser(username,password)){
+               // Creem una nova variable de sessió 
+               // Per prevenir el robatori de sessió o hickjacking: hijacking
+               // Consultat de: https://www.youtube.com/watch?v=IZ-lnQ4G_uI
+               HttpSession session=request.getSession();
+               session.setAttribute("user", username);
+               // Setting session to expiry in 30 mins
+               session.setMaxInactiveInterval(30*60);
+
+               // Afegim una cookie per registrar a l'usuari.
+               Cookie userName = new Cookie("user", username);
+               userName.setMaxAge(30*60);
+               response.addCookie(userName);
+               // Track login attempts (combats: brute force attacks)
+               intentsLogin++;
+               session.setAttribute("intentsLogin", intentsLogin);
+               // Indiquem a la vista si l'usuari es admin o user.
+               session.setAttribute("role", usersManager.getRole(username));
+               response.sendRedirect("./intranet/adn.jsp");
+        } else {
+            // Si l'usuari amb contrassenya no existeix a la nostra base de dades, se l'redirigeix a la pantalla de login.
             response.sendRedirect("login.jsp?error=1");
         }
     }
     
     private void ValidateCookie(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Cookie[] cookies = request.getCookies();
-        
     }
     
     private void logout(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/html");
         // https://kodejava.org/how-do-i-delete-a-cookie-in-servlet/
-        // To delete a cookie, we need to create a cookie that have the same
-        // name with the cookie that we want to delete. We also need to set
-        // the max age of the cookie to 0 and then add it to the Servlet's
-        // response method.
-        //
         Cookie cookieUser = new Cookie("user", "");
         cookieUser.setMaxAge(0);
         response.addCookie(cookieUser);
         Cookie cookieJSESSIONID = new Cookie("JSESSIONID","");
         cookieJSESSIONID.setMaxAge(0);
         response.addCookie(cookieJSESSIONID);
-    	//invalidate the session if exists
-    	HttpSession session = request.getSession(false);
-    	System.out.println("User="+session.getAttribute("user"));
-    	/*
+    	  // Invalidate the session if exists
+    	  HttpSession session = request.getSession();
+        System.out.println("User="+session.getAttribute("user"));
+        session.invalidate();
+    	  // System.out.println("User="+session.getAttribute("user"));
+    	  /* Codi redundant.
         if(session != null){
             session.removeAttribute("user");
             session.removeAttribute("role");
             session.invalidate();
-    	}
+    	   }
         */
         response.sendRedirect("login.jsp");
     }
