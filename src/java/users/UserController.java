@@ -5,8 +5,17 @@
  */
 package users;
 
+import EncryptDecryptSHA1.EncryptAndDecryptSHA1;
 import users.model.UsersManager;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -27,6 +36,8 @@ public class UserController extends HttpServlet {
      * Classe Manager dels usuaris de la app.
      */
     private UsersManager usersManager;
+    private EncryptAndDecryptSHA1 encripterService;
+        
     /**
      * Número d'intents de login.
      */
@@ -36,6 +47,7 @@ public class UserController extends HttpServlet {
     @Override
     public void init(ServletConfig config) throws ServletException{
         usersManager = new UsersManager();
+        encripterService = new EncryptAndDecryptSHA1();
         super.init(config);
     }
     
@@ -102,24 +114,32 @@ public class UserController extends HttpServlet {
            String password=request.getParameter("password");    
            // Si l'usuari amb contrassenya existeix a la nostra base de dades.
            if(usersManager.isValidUser(username,password)){
-               // Creem una nova variable de sessió 
-               // Per prevenir el robatori de sessió o hickjacking: hijacking
-               // Consultat de: https://www.youtube.com/watch?v=IZ-lnQ4G_uI
-               HttpSession session=request.getSession();
-               session.setAttribute("user", username);
-               // Setting session to expiry in 30 mins
-               session.setMaxInactiveInterval(30*60);
-
-               // Afegim una cookie per registrar a l'usuari.
-               Cookie userName = new Cookie("user", username);
-               userName.setMaxAge(30*60);
-               response.addCookie(userName);
-               // Track login attempts (combats: brute force attacks)
-               intentsLogin++;
-               session.setAttribute("intentsLogin", intentsLogin);
-               // Indiquem a la vista si l'usuari es admin o user.
-               session.setAttribute("role", usersManager.getRole(username));
-               response.sendRedirect("./intranet/adn.jsp");
+               try {
+                   // Creem una nova variable de sessió
+                   // Per prevenir el robatori de sessió o hickjacking: hijacking
+                   // Consultat de: https://www.youtube.com/watch?v=IZ-lnQ4G_uI
+                   HttpSession session=request.getSession();
+                   session.setAttribute("user", username);
+                   // Setting session to expiry in 30 mins
+                   session.setMaxInactiveInterval(30*60);
+                   
+                   // Afegim una cookie per registrar a l'usuari.
+                   Cookie userName = new Cookie("user", username);
+                   // TODO.
+                   // Encriptar el contenido de la Cookie:
+                   // nombre encriptado (ideal algoritmo SHA-1 o similar)
+                   username = encripterService.encrypt(username, "claveprivada");
+                   userName.setMaxAge(30*60);
+                   response.addCookie(userName);
+                   // Track login attempts (combats: brute force attacks)
+                   intentsLogin++;
+                   session.setAttribute("intentsLogin", intentsLogin);
+                   // Indiquem a la vista si l'usuari es admin o user.
+                   session.setAttribute("role", usersManager.getRole(username));
+                   response.sendRedirect("./intranet/adn.jsp");
+               } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | UnsupportedEncodingException | IllegalBlockSizeException | BadPaddingException ex) {
+                   Logger.getLogger("").log(Level.SEVERE, null, ex);
+               }
            } else {
             // Si l'usuari amb contrassenya no existeix a la nostra base de dades, se l'redirigeix a la pantalla de login.
             response.sendRedirect("login.jsp?error=1");

@@ -45,7 +45,11 @@ public class UsersManager {
         boolean exists = users.containsKey(username);
         // Contraseña correcta ? 
         User dbUser = users.get(username);
-        Role role = dbUser.getRole();
-        return role.toString();
+        if(dbUser!=null) {
+            Role role = dbUser.getRole();
+            return role.toString();
+        } else {
+           return null; 
+        }
     }
 }

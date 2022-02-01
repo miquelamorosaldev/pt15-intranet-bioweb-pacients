@@ -11,14 +11,6 @@ public class User {
     private Role role;
 
     /**
-     * Crea un usuari buit.
-     */
-    public User () {
-        username = "";
-        password = "";
-    }
-    
-    /**
      * Crea un usuari sense rol.
      * @param u usuari
      * @param p contrassenya
