@@ -72,4 +72,34 @@ public class PatientsMemoryDAO implements IPatientsDAO{
         return filteredPatients;
     }
     
+    public List<Patient> listPatientsByBloodType(String bloodType) {
+        List<Patient> filteredPatients = new ArrayList<>();
+        // gen-wom, gen-man, or gen-oth.
+        for (Patient patient : patients) {
+            if (patient.getBloodType().equals(bloodType)) {
+                filteredPatients.add(patient);
+            }
+        }
+        return filteredPatients;
+    }
+    
+    /**
+     * Filter patients by BloodType and RH. 
+     * @param bloodType Expected values: A, O, AB, B
+     * @param rh Expected values: +, -
+     * @return Filtered patients list.
+     */
+    public List<Patient> listPatientsByBloodTypeAndRH(String bloodType, String rh) {
+        List<Patient> filteredPatients = new ArrayList<>();
+        char rhForm = rh.charAt(0);
+        // gen-wom, gen-man, or gen-oth.
+        for (Patient patient : patients) {
+            if (patient.getRH() == rhForm && 
+                    patient.getBloodType().equals(bloodType) ) {
+                filteredPatients.add(patient);
+            }
+        }
+        return filteredPatients;
+    }
+    
 }

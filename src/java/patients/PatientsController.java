@@ -7,6 +7,7 @@ package patients;
  */
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
@@ -98,12 +99,35 @@ public class PatientsController extends HttpServlet {
         } else {
             // 2. Agafem les dades del filtre de pacients.
             String rh_form = request.getParameter("rh_form");
+            String bloodType_form = request.getParameter("bloodType_form");
+            
+            // 2.2 Validem les dades del formulari. Si ens retornen valor nul 
+            // (en el nostre cas un valor -)
+            boolean RHSelected = !rh_form.equals("*");
+            boolean BloodSelected = !bloodType_form.equals("*");   
             
             // 3. Cridem PatientsDAO per a què ens retorni la llista de pacients 
             // filtrada.
             PatientsMemoryDAO daoPatients = new PatientsMemoryDAO();
-            List<Patient> resultList = daoPatients.listPatientsByRH(rh_form);
-
+            List<Patient> resultList = new ArrayList<Patient>(); 
+            
+            if(RHSelected && BloodSelected) {
+                resultList 
+                    = daoPatients.listPatientsByBloodTypeAndRH
+                        (bloodType_form,rh_form);
+            }
+            if(RHSelected && !BloodSelected) {
+               resultList 
+                    = daoPatients.listPatientsByRH(rh_form); 
+            }
+            if(!RHSelected && BloodSelected) {
+                resultList 
+                    = daoPatients.listPatientsByBloodType(bloodType_form);
+            }
+            if(!RHSelected && !BloodSelected) {
+                resultList 
+                    = daoPatients.listAllPatients();
+            }
             // 4. Enviem la llista resultant a la JSP 
             request.setAttribute("patientsList", resultList);
             // ./intranet/filterPatients.jsp

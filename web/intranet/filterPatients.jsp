@@ -33,9 +33,21 @@
                                 RH Filter
                             </label>
                             <select class="form-control custom-select col-sm-3" name="rh_form" id="rh_form">
-                                <option value="-">---</option>
+                                <option value="*">---</option>
                                 <option value="+">RH+</option>
                                 <option value="-">RH-</option>
+                            </select>
+                        </div>
+                        <div class="form-group row">
+                            <label class="input-group-prepend col-sm-2" for="bloodType_form">
+                                Blood Type Filter
+                            </label>
+                            <select class="form-control custom-select col-sm-3" name="bloodType_form" id="bloodType_form">
+                                <option value="*">---</option>
+                                <option value="A">A</option>
+                                <option value="B">B</option>
+                                <option value="AB">AB</option>
+                                <option value="O">O</option>
                             </select>
                         </div>
                         <button type="submit" form="filter_form" class="btn btn-primary col-sm-2" 
@@ -65,6 +77,8 @@
                         </ul>
                         <% if(patientsList.size()>0) { %>
                             <p><%=patientsList.size()%> pacientes encontrados.</p>
+                        <% } else {%>
+                            <p class="error">No hemos encontrado pacientes.</p>
                         <% } %>
             </div>
         </main>
