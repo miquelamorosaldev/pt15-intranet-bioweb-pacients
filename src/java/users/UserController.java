@@ -139,7 +139,7 @@ public class UserController extends HttpServlet {
                    // TODO.
                    // Encriptar el contenido de la Cookie:
                    // nombre encriptado (ideal algoritmo SHA-1 o similar)
-                   username = encripterService.encrypt(username, "claveprivada");
+                   String usernameCookie = encripterService.encrypt(username, "claveprivada");
                    userName.setMaxAge(30*60);
                    response.addCookie(userName);
                    // Track login attempts (combats: brute force attacks)

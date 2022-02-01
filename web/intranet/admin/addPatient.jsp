@@ -1,10 +1,3 @@
-<%-- 
-    Document   : landing
-    Created on : Jan 30, 2019, 3:40:48 PM
-    Author     : aasensio
---%>
-
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="adnutils.*" %>
 <%@page import="patients.IPatientsDAO" %>
 <%@page import="patients.PatientsMemoryDAO" %>
@@ -60,7 +53,7 @@
                 </form> 
             </div>
             <%
-                // Si ha clicat o no al botÃ³ del formulari
+                // Si ha clicat o no al botó del formulari
                 boolean resultOK = false;
                 String name = "";
                 String surname = "";
@@ -68,7 +61,7 @@
                 String gender = "";
                 Validation validator = new Validation(); 
                 if(request.getParameter("ok")!=null) {
-                    // ObtenciÃ³ dels camps del form.
+                    // Obtenció dels camps del form.
                     name = request.getParameter("name");
                     surname = request.getParameter("surname");
                     heightField = request.getParameter("height");
@@ -82,7 +75,7 @@
                     // Not age field in this form.
                     // resultOK = resultOK && age > 1;
                     
-                    // Si tots els camps sÃ³n correctes.
+                    // Si tots els camps són correctes.
                     if(resultOK) {
                         // debug
                         out.println("<p class='bg-success'> Bon dia " + gender 

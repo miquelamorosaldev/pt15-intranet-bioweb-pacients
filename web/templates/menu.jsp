@@ -37,13 +37,18 @@
         -->
         <a class='flex-sm-fill text-sm-center nav-link active opt-menu' 
            href='../user?action=Invalidate'>Logout</a>
-        <% if(session.getAttribute("admin")!=null) { %>
+        <%      
+            } 
+        %>
+        <% if( (session.getAttribute("user")!=null) 
+            && (session.getAttribute("role").equals("ADMIN")) ) { %>
         <!-- Menú navegació usuaris registrats Intranet com a admin. -->
             <a class='flex-sm-fill text-sm-center nav-link opt-menu' 
-               href='./intranet/admin/addPatient.jsp'>Add Patient</a>
-    <%      
-            } 
-        }
-    %>
+               href='<%= request.getContextPath() %>/intranet/admin/addPatient.jsp'>Add Patient</a>
+            <a class='flex-sm-fill text-sm-center nav-link opt-menu' 
+               href='<%= request.getContextPath() %>/intranet/admin/usersList.jsp'>List Users</a>
+        <%      
+            }
+        %>
     </nav>
 </nav>
