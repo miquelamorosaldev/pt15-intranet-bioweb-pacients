@@ -5,13 +5,13 @@ import java.util.Map;
 
 /**
  * Modulo de autenticación de usuarios provisional.
- * @author tarda
+ * @author mamorosal
  */
-public class UsersManager {
+public class UsersManagerDAOMemory implements IUserDAO {
     
     private Map<String,User> users;
     
-    public UsersManager() {
+    public UsersManagerDAOMemory() {
         users = new HashMap<>();
         users.put("dawbio2",
             new User("dawbio2","admin",Role.ADMIN));
@@ -27,19 +27,6 @@ public class UsersManager {
             new User("asix2","alumne",Role.USER));
     }
     
-    public boolean isValidUser(String username, String password) {
-        // Existe nombre de usuario ?
-        boolean exists = users.containsKey(username);
-        User dbUser;
-        String pwForm = "";
-        // Contraseña correcta ? 
-        if(exists) {
-            dbUser = users.get(username);
-            pwForm = dbUser.getPassword();
-        }
-        return exists && password.equals(pwForm);
-    }
-    
     public String getRole(String username) {
         // Existe nombre de usuario ?
         boolean exists = users.containsKey(username);
@@ -51,5 +38,24 @@ public class UsersManager {
         } else {
            return null; 
         }
+    }
+
+    @Override
+    public boolean login(String username, String password) {
+        // Existe nombre de usuario ?
+        boolean exists = users.containsKey(username);
+        User dbUser;
+        String pwForm = "";
+        // Contraseña correcta ? 
+        if(exists) {
+            dbUser = users.get(username);
+            pwForm = dbUser.getPassword();
+        }
+        return exists && password.equals(pwForm);
+    }
+
+    @Override
+    public boolean logout(String username) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

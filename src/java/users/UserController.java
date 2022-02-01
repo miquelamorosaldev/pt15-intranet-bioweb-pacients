@@ -6,7 +6,7 @@
 package users;
 
 import EncryptDecryptSHA1.EncryptAndDecryptSHA1;
-import users.model.UsersManager;
+import users.model.UsersManagerDAOMemory;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
@@ -35,7 +35,7 @@ public class UserController extends HttpServlet {
     /**
      * Classe Manager dels usuaris de la app.
      */
-    private UsersManager usersManager;
+    private UsersManagerDAOMemory usersManager;
     private EncryptAndDecryptSHA1 encripterService;
         
     /**
@@ -46,7 +46,7 @@ public class UserController extends HttpServlet {
     
     @Override
     public void init(ServletConfig config) throws ServletException{
-        usersManager = new UsersManager();
+        usersManager = new UsersManagerDAOMemory();
         encripterService = new EncryptAndDecryptSHA1();
         super.init(config);
     }
@@ -113,7 +113,7 @@ public class UserController extends HttpServlet {
            String username=request.getParameter("username");
            String password=request.getParameter("password");    
            // Si l'usuari amb contrassenya existeix a la nostra base de dades.
-           if(usersManager.isValidUser(username,password)){
+           if(usersManager.login(username,password)){
                try {
                    // Creem una nova variable de sessió
                    // Per prevenir el robatori de sessió o hickjacking: hijacking
@@ -161,8 +161,8 @@ public class UserController extends HttpServlet {
         Cookie cookieJSESSIONID = new Cookie("JSESSIONID","");
         cookieJSESSIONID.setMaxAge(0);
         response.addCookie(cookieJSESSIONID);
-    	  // Invalidate the session if exists
-    	  HttpSession session = request.getSession();
+    	// Invalidate the session if exists
+    	HttpSession session = request.getSession();
         System.out.println("User="+session.getAttribute("user"));
         session.invalidate();
     	  // System.out.println("User="+session.getAttribute("user"));
