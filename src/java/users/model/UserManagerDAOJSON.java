@@ -42,10 +42,14 @@ public class UserManagerDAOJSON implements IUserDAO {
         // TODO.
         return false;
     }
-
     
     @Override
     public boolean logout (String username) {
         return false;
+    }
+
+    @Override
+    public Object getRole(String username) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

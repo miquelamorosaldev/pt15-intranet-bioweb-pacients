@@ -24,6 +24,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import users.model.IUserDAO;
+import users.model.UserManagerDAOJSON;
 
 /**
  * @author Institut Provençana, 2022.
@@ -33,19 +35,28 @@ public class UserController extends HttpServlet {
 
    
     /**
-     * Classe Manager dels usuaris de la app.
+     * Interfaz Manager dels usuaris de la app.
      */
-    private UsersManagerDAOMemory usersManager;
+    private IUserDAO usersManager;
+    /**
+     * Classe utilitat per encriptar els usuaris de la app.
+     */
     private EncryptAndDecryptSHA1 encripterService;
         
     /**
      * Número d'intents de login.
      */
     private int intentsLogin;
-    private int MAXIM_INTENTS_LOGIN = 10;
+    /**
+     * Número d'intents de login màxims, configurable i fixe.
+     */
+    private final int MAXIM_INTENTS_LOGIN = 10;
     
     @Override
     public void init(ServletConfig config) throws ServletException{
+        // Inyectamos el DAO de la fuente que preferimos.
+        // usersManager = new UserManagerDAOJSON();
+        // Debug
         usersManager = new UsersManagerDAOMemory();
         encripterService = new EncryptAndDecryptSHA1();
         super.init(config);

@@ -21,4 +21,6 @@ public interface IUserDAO {
      * @return true if the user has been logged out.
      */
     public boolean logout (String username);
+
+    public Object getRole(String username);
 }
