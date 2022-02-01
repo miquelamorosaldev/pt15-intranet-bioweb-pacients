@@ -13,7 +13,8 @@
     </head>
     <body>
         <header>
-            <%@include file="templates/menu.jsp" %>
+            <!-- Ull amb les rutes. En aquest cas és ../.. (carpeta anterior) /templates -->
+            <%@include file="../../templates/menu.jsp" %>
         </header>
         <main>
             <div class="container mw-100"> <!-- comment -->

@@ -32,8 +32,8 @@
             } 
          %>
          <header>
-        <!-- Ull amb les rutes. En aquest cas és .. (carpeta anterior) /templates -->
-            <%@include file="../templates/menu.jsp" %>
+            <!-- Ull amb les rutes. En aquest cas és ../.. (carpeta anterior) /templates -->
+            <%@include file="../../templates/menu.jsp" %>
         </header>
         <main class="container">
             <h3>Hola 

@@ -21,6 +21,16 @@
         <a class='flex-sm-fill text-sm-center nav-link opt-menu' 
            href='../intranet/news.jsp'>News</a>
         -->
+        <% if( (session.getAttribute("user")!=null) 
+            && (session.getAttribute("role").equals("ADMIN")) ) { %>
+        <!-- Menú navegació usuaris registrats Intranet com a admin. -->
+            <a class='flex-sm-fill text-sm-center nav-link opt-menu' 
+               href='<%= request.getContextPath() %>/intranet/admin/addPatient.jsp'>Add Patient</a>
+            <a class='flex-sm-fill text-sm-center nav-link opt-menu' 
+               href='<%= request.getContextPath() %>/intranet/admin/usersList.jsp'>List Users</a>
+        <%      
+            }
+        %>
         <a class='flex-sm-fill text-sm-center nav-link opt-menu' 
            href='../intranet/adn.jsp'>ADNValidator</a>
         <!-- 
@@ -40,15 +50,6 @@
         <%      
             } 
         %>
-        <% if( (session.getAttribute("user")!=null) 
-            && (session.getAttribute("role").equals("ADMIN")) ) { %>
-        <!-- Menú navegació usuaris registrats Intranet com a admin. -->
-            <a class='flex-sm-fill text-sm-center nav-link opt-menu' 
-               href='<%= request.getContextPath() %>/intranet/admin/addPatient.jsp'>Add Patient</a>
-            <a class='flex-sm-fill text-sm-center nav-link opt-menu' 
-               href='<%= request.getContextPath() %>/intranet/admin/usersList.jsp'>List Users</a>
-        <%      
-            }
-        %>
+        
     </nav>
 </nav>
