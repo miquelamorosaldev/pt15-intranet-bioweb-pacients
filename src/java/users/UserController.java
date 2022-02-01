@@ -88,7 +88,8 @@ public class UserController extends HttpServlet {
         }
     }
         
-    private void login(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    private void login(HttpServletRequest request, HttpServletResponse response) 
+            throws IOException {
         
         // Si l'usuari no ha excedit el límit d'intents de login.
         if(intentsLogin > MAXIM_INTENTS_LOGIN){
@@ -119,9 +120,10 @@ public class UserController extends HttpServlet {
                // Indiquem a la vista si l'usuari es admin o user.
                session.setAttribute("role", usersManager.getRole(username));
                response.sendRedirect("./intranet/adn.jsp");
-        } else {
+           } else {
             // Si l'usuari amb contrassenya no existeix a la nostra base de dades, se l'redirigeix a la pantalla de login.
             response.sendRedirect("login.jsp?error=1");
+           }
         }
     }
     

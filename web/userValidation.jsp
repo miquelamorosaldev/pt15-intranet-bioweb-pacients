@@ -14,7 +14,5 @@
            response.sendRedirect("../login.jsp?error=1");
        } 
        */
-   } else {
-       response.sendRedirect("login.jsp");
-   }
+   } 
 %>
