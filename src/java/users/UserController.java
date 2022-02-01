@@ -7,7 +7,6 @@ package users;
 
 import users.model.UsersManager;
 import java.io.IOException;
-import java.util.Map;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -58,9 +57,9 @@ public class UserController extends HttpServlet {
                 case "Validate":
                     login(request,response);
                 break;
-                case "ValidateCookie":
-                    ValidateCookie(request,response);
-                break;
+//                case "ValidateCookie":
+//                    ValidateCookie(request,response);
+//                break;
                 case "AdminPage":
                     admin(request,response);
                 break;
@@ -92,9 +91,9 @@ public class UserController extends HttpServlet {
     private void login(HttpServletRequest request, HttpServletResponse response) throws IOException {
         
         // Si l'usuari no ha excedit el límit d'intents de login.
-		  if(loginAttempts > MAXIM_INTENTS_LOGIN){
-			   String errorMessage = "Error: Number of Login Attempts Exceeded";
-			   request.setAttribute("errorMessage", errorMessage);
+        if(intentsLogin > MAXIM_INTENTS_LOGIN){
+            String errorMessage = "Error: Number of Login Attempts Exceeded";
+            request.setAttribute("errorMessage", errorMessage);
             response.sendRedirect("login.jsp?error=1");
         } else {
            // Agafem les dades del formulari.
@@ -126,11 +125,12 @@ public class UserController extends HttpServlet {
         }
     }
     
-    private void ValidateCookie(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        Cookie[] cookies = request.getCookies();
-    }
+//    private void ValidateCookie(HttpServletRequest request, HttpServletResponse response) throws IOException {
+//        Cookie[] cookies = request.getCookies();
+//    }
     
-    private void logout(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    private void logout(HttpServletRequest request, HttpServletResponse response) 
+            throws IOException {
         response.setContentType("text/html");
         // https://kodejava.org/how-do-i-delete-a-cookie-in-servlet/
         Cookie cookieUser = new Cookie("user", "");
