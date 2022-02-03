@@ -27,8 +27,8 @@
             }
             // Ara si, llegim la llista d'usuaris.
             List<User> usersList = new ArrayList<User>();
-            if(request.getAttribute("usersList")!=null) {
-                usersList = (List<User>) request.getAttribute("usersList"); 
+            if(session.getAttribute("usersList")!=null) {
+                usersList = (List<User>) session.getAttribute("usersList"); 
             } 
          %>
          <header>
