@@ -8,12 +8,12 @@
         <!--
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous"> -->
         <!--VENDORS-->
-        <link rel="stylesheet" href="vendors/bootstrap-4.1.3-dist/css/bootstrap.min.css">
-        <script src="vendors/jquery/jquery-3.3.1.min.js"></script>
-        <!--CONTROL-->
-        <script type="text/javascript" src="./js/control/utils.js"></script>
-        <script type="text/javascript" src="./js/control/index.js"></script>
-        <title>PT152-ADMIN</title>
+        <link rel="stylesheet" href="<%= request.getContextPath() %>/vendors/bootstrap-4.1.3-dist/css/bootstrap.min.css">
+        <script src="<%= request.getContextPath() %>/vendors/jquery/jquery-3.3.1.min.js"></script>
+        <link rel="stylesheet" href="<%= request.getContextPath() %>/css/styles.css">
+<!--    <script type="text/javascript" src="./js/control/utils.js"></script>
+        <script type="text/javascript" src="./js/control/index.js"></script>-->
+        <title>PT151-21-PatientsBioInformatics- USERS LIST</title>
     </head>
     <body>
         <%  
@@ -67,7 +67,7 @@
             </table>
         </main>
     </body>
-    <!-- <footer>
-        
-    </footer> -->
+    <footer>
+            <%@include file="../../templates/footer.jsp" %>
+    </footer>
 </html>

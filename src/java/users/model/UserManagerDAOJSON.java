@@ -10,6 +10,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import java.text.ParseException;
+import java.util.ArrayList;
 import users.model.IUserDAO;
 
 
@@ -50,6 +51,11 @@ public class UserManagerDAOJSON implements IUserDAO {
 
     @Override
     public Object getRole(String username) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ArrayList<User> listAllUsers() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

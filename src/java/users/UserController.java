@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package users;
 
 import EncryptDecryptSHA1.EncryptAndDecryptSHA1;
@@ -25,7 +20,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import users.model.IUserDAO;
-import users.model.UserManagerDAOJSON;
 
 /**
  * @author Institut Provençana, 2022.
@@ -84,29 +78,33 @@ public class UserController extends HttpServlet {
 //                    ValidateCookie(request,response);
 //                break;
                 case "AdminPage":
-                    admin(request,response);
+                    listUsersAsAdmin(request,response);
                 break;
                 case "Invalidate":
                     logout(request,response);
                 break;
             }  
         } else{
-            response.sendRedirect("login.jsp");
+            closeUserSession(response, request);
+            response.sendRedirect("login.jsp?error=1");
         }
         
         
     }
     
-    private void admin(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    private void listUsersAsAdmin(HttpServletRequest request, HttpServletResponse response) throws IOException {
         // Agafem les dades de la sessió.
         HttpSession session=request.getSession();
         if(session.getAttribute("user")==null){
-             response.sendRedirect("login.jsp");
+            closeUserSession(response, request);
+            response.sendRedirect("login.jsp?error=1");
          } else {
              if(!session.getAttribute("role").equals("ADMIN")){
-                  response.sendRedirect("login.jsp");
+                 closeUserSession(response, request);
+                 session.setAttribute("usersList", usersManager.listAllUsers());
+                 response.sendRedirect("login.jsp?error=1");
              } else {
-                response.sendRedirect("admin.jsp");
+                response.sendRedirect("./intranet/admin/usersList.jsp");
             }
         }
     }
@@ -153,6 +151,7 @@ public class UserController extends HttpServlet {
                }
            } else {
             // Si l'usuari amb contrassenya no existeix a la nostra base de dades, se l'redirigeix a la pantalla de login.
+            closeUserSession(response, request);
             response.sendRedirect("login.jsp?error=1");
            }
         }
@@ -165,17 +164,7 @@ public class UserController extends HttpServlet {
     private void logout(HttpServletRequest request, HttpServletResponse response) 
             throws IOException {
         response.setContentType("text/html");
-        // https://kodejava.org/how-do-i-delete-a-cookie-in-servlet/
-        Cookie cookieUser = new Cookie("user", "");
-        cookieUser.setMaxAge(0);
-        response.addCookie(cookieUser);
-        Cookie cookieJSESSIONID = new Cookie("JSESSIONID","");
-        cookieJSESSIONID.setMaxAge(0);
-        response.addCookie(cookieJSESSIONID);
-    	// Invalidate the session if exists
-    	HttpSession session = request.getSession();
-        System.out.println("User="+session.getAttribute("user"));
-        session.invalidate();
+        closeUserSession(response, request);
     	  // System.out.println("User="+session.getAttribute("user"));
     	  /* Codi redundant.
         if(session != null){
@@ -184,7 +173,21 @@ public class UserController extends HttpServlet {
             session.invalidate();
     	   }
         */
-        response.sendRedirect("login.jsp");
+        response.sendRedirect("login.jsp?error=1");
+    }
+
+    private void closeUserSession(HttpServletResponse response, HttpServletRequest request) {
+        // https://kodejava.org/how-do-i-delete-a-cookie-in-servlet/
+        Cookie cookieUser = new Cookie("user", "");
+        cookieUser.setMaxAge(0);
+        response.addCookie(cookieUser);
+        Cookie cookieJSESSIONID = new Cookie("JSESSIONID","");
+        cookieJSESSIONID.setMaxAge(0);
+        response.addCookie(cookieJSESSIONID);
+        // Invalidate the session if exists
+        HttpSession session = request.getSession();
+        System.out.println("User="+session.getAttribute("user"));
+        session.invalidate();
     }
              
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

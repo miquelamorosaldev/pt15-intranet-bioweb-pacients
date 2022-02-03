@@ -27,7 +27,7 @@
             <a class='flex-sm-fill text-sm-center nav-link opt-menu' 
                href='<%= request.getContextPath() %>/intranet/admin/addPatient.jsp'>Add Patient</a>
             <a class='flex-sm-fill text-sm-center nav-link opt-menu' 
-               href='<%= request.getContextPath() %>/intranet/admin/usersList.jsp'>List Users</a>
+               href='<%= request.getContextPath() %>/user?action=AdminPage'>List Users</a>
         <%      
             }
         %>

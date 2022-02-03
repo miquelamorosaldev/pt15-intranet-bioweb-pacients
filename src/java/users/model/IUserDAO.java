@@ -1,6 +1,8 @@
 
 package users.model;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author mamorosal
@@ -23,4 +25,6 @@ public interface IUserDAO {
     public boolean logout (String username);
 
     public Object getRole(String username);
+
+    public ArrayList<User> listAllUsers();
 }

@@ -1,6 +1,9 @@
 package users.model;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -38,6 +41,13 @@ public class UsersManagerDAOMemory implements IUserDAO {
         } else {
            return null; 
         }
+    }
+    
+    public ArrayList<User> listAllUsers() {
+        // https://www.baeldung.com/java-convert-collection-arraylist
+        Collection<User> colUsers = users.values();
+        ArrayList<User> usersList = new ArrayList<>(colUsers);
+        return usersList;
     }
 
     @Override
