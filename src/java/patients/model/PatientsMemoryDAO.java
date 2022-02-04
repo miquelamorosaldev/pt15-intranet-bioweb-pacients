@@ -33,6 +33,14 @@ public class PatientsMemoryDAO implements IPatientsDAO{
                 new Patient("Mary","Jackson","gen-wom","A",'+',164,60));
             patients.add(
                 new Patient("George","Mendel","gen-man","AB",'+',160,60));
+            patients.add(
+                new Patient("Radia","Perlman","gen-wom","A",'+',165,55));
+            patients.add(
+                new Patient("Margaret","Dayhoff","gen-wom","O",'-',167,61));
+            patients.add(
+                new Patient("Carol","Shaw","gen-wom","O",'-',167,61));
+            patients.add(
+                new Patient("Frederick","Sanger","gen-man","A",'-',171,72));
         }
     }
     
