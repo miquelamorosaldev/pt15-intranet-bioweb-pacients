@@ -1,9 +1,3 @@
-<%-- 
-    Document   : landing
-    Created on : Jan 30, 2019, 3:40:48 PM
-    Author     : aasensio
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>

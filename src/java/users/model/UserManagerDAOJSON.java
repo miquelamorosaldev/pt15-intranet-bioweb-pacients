@@ -6,42 +6,49 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import java.text.ParseException;
 import java.util.ArrayList;
-import users.model.IUserDAO;
-
 
 /**
  *
- * @author alumne
+ * @author amoros
  */
 public class UserManagerDAOJSON implements IUserDAO {
     
+    String path;
+    
+    public UserManagerDAOJSON (String path) {
+        this.path = path;
+    }
+    
     @Override
     public boolean login (String username, String password) {
+        boolean exists = false;
         // Referencia:
         // https://es.stackoverflow.com/questions/140363/leer-json-con-gson-en-java
         JsonParser parser = new JsonParser();
         try {
+            // /home/alumne/NetBeansProjects/pt15-intranet-bioweb-pacients-2022/web/WEB-INF/users.json
             Object obj = parser.parse(
-                       new FileReader("usuarios.json"));
+                       new FileReader("/home/alumne/NetBeansProjects/pt15-intranet-bioweb-pacients-2022/web/WEB-INF/users.json"));
 
                JsonObject jsonObject = (JsonObject) obj;
                System.out.println("JSON LEIDO: " + jsonObject);
 
-               JsonArray array = (JsonArray) jsonObject.get("Usuarios");
-               System.out.println("");
-               
+               JsonArray jsonArray = (JsonArray) jsonObject.get("Usuarios");
+            // User u = new User();
+//            for (int i = 0; i < jsonArray.size(); i++) {
+//                User u = (User) jsonArray.get(i);
+//            }
+                
            } catch (FileNotFoundException ex) {
                Logger.getLogger(UserManagerDAOJSON.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IOException ex) {   
              Logger.getLogger(UserManagerDAOJSON.class.getName()).log(Level.SEVERE, null, ex);
             }   
         // TODO.
-        return false;
+        return exists;
     }
     
     @Override

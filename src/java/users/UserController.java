@@ -1,7 +1,6 @@
 package users;
 
 import EncryptDecryptSHA1.EncryptAndDecryptSHA1;
-import users.model.UsersManagerDAOMemory;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
@@ -20,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import users.model.IUserDAO;
+import users.model.UserManagerDAOJSON;
 
 /**
  * @author Institut Provençana, 2022.
@@ -48,12 +48,13 @@ public class UserController extends HttpServlet {
     
     @Override
     public void init(ServletConfig config) throws ServletException{
-        // Inyectamos el DAO de la fuente que preferimos.
-        // usersManager = new UserManagerDAOJSON();
-        // Debug
-        usersManager = new UsersManagerDAOMemory();
-        encripterService = new EncryptAndDecryptSHA1();
         super.init(config);
+        // Inyectamos el DAO de la fuente que preferimos.
+        String path = getServletContext().getRealPath("/WEB-INF");
+        usersManager = new UserManagerDAOJSON(path);
+        // Debug
+        // usersManager = new UsersManagerDAOMemory();
+        encripterService = new EncryptAndDecryptSHA1();
     }
     
     /**
