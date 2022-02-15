@@ -29,10 +29,13 @@
             <a class='flex-sm-fill text-sm-center nav-link opt-menu' 
                href='<%= request.getContextPath() %>/user?action=AdminPage'>List Users</a>
         <%      
-            }
+            } else {
         %>
         <a class='flex-sm-fill text-sm-center nav-link opt-menu' 
            href='../intranet/adn.jsp'>ADNValidator</a>
+        <% 
+            }
+        %>
         <!-- 
         <a class='flex-sm-fill text-sm-center nav-link opt-menu' 
            href='../intranet/listAllPatients.jsp'>List Patients</a> 

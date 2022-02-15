@@ -173,7 +173,7 @@ public class UserController extends HttpServlet {
             session.invalidate();
     	   }
         */
-        response.sendRedirect("login.jsp?error=1");
+        response.sendRedirect("login.jsp");
     }
 
     private void closeUserSession(HttpServletResponse response, HttpServletRequest request) {
@@ -186,7 +186,7 @@ public class UserController extends HttpServlet {
         response.addCookie(cookieJSESSIONID);
         // Invalidate the session if exists
         HttpSession session = request.getSession();
-        System.out.println("User="+session.getAttribute("user"));
+        // System.out.println("User="+session.getAttribute("user"));
         session.invalidate();
     }
              
