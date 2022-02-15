@@ -102,9 +102,9 @@ public class UserController extends HttpServlet {
          } else {
              if(!session.getAttribute("role").equals("ADMIN")){
                  closeUserSession(response, request);
-                 session.setAttribute("usersList", usersManager.listAllUsers());
                  response.sendRedirect("login.jsp?error=1");
              } else {
+                session.setAttribute("usersList", usersManager.listAllUsers());
                 response.sendRedirect("./intranet/admin/usersList.jsp");
             }
         }
